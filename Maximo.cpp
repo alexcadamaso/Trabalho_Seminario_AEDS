@@ -23,7 +23,7 @@ void Maximo::Max_Heapify(vector<int> &valores, int tamanho,int i){
         Max_Heapify(valores,tamanho,maior);
     }
 
-    }
+}
  void Maximo::Build_Max_Heap(vector<int> &valores, int tamanho){
     for(int i = tamanho/2 - 1; i >= 0; i--){
         Max_Heapify(valores,tamanho,i);
