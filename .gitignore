@@ -1,0 +1,8 @@
+.vscode/
+env/
+bin/
+*.class
+results/*.csv
+build/
+*.log
+.DS_Store
