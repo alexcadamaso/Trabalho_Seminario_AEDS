@@ -9,6 +9,7 @@ using namespace std;
 int main(){
 
 Maximo Algorithm;
+Minimo Algorithm2;
 vector<int> valores;
 int tam;
 
@@ -25,8 +26,12 @@ clock_t inicio = clock();
 
 Algorithm.Heapsort(valores,tam);
 clock_t fim1 = clock() - inicio;
+Algorithm2.Heapsort(valores,tam);
+clock_t fim2 = clock() - (fim1 + inicio);
+
 
 cout << "Tempo gasto: " << (float)fim1/CLOCKS_PER_SEC << "\n";
+cout << "Tempo gasto: " << (float)fim2/CLOCKS_PER_SEC << "\n";
 /*cout << "Vetor ordenado: ";
 for(int i = 0; i < tam ; i++){
     cout << valores[i] << " ";
