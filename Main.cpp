@@ -1,4 +1,4 @@
-#include "Maximo.hpp"
+#include "Heap.hpp"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -8,8 +8,8 @@ using namespace std;
 
 int main(){
 
-Maximo Algorithm;
-Minimo Algorithm2;
+Max_Min Algorithm(true);
+Max_Min Algorithm2(false);
 vector<int> valores;
 int tam;
 
@@ -23,7 +23,6 @@ for(int i = 0; i <= 1000000; i++){
 tam = valores.size();
 
 clock_t inicio = clock();
-
 Algorithm.Heapsort(valores,tam);
 clock_t fim1 = clock() - inicio;
 Algorithm2.Heapsort(valores,tam);
