@@ -4,8 +4,8 @@ import java.util.Random;
 public class DataGenerator {
     // definição de constantes
     public static final long SEED = 42L;
-    public static final float LIMITE_MAXIMO = 1000000.0f;
-    public static final float LIMITE_MINIMO = -1000000.0f;
+    public static final double LIMITE_MAXIMO = 1000000.0;
+    public static final double LIMITE_MINIMO = -1000000.0;
 
     public static final int ALEATORIO = 1;
     public static final int ORDENADO = 2;
@@ -14,38 +14,36 @@ public class DataGenerator {
     private DataGenerator(){}
 
     // função para gerar dados de acordo com a ordenação escolhida
-    public static float[] gerarDados(int n, int tipo_organizacao_dados){
+    public static double[] gerarDados(int n, int tipoOrganizacaoDados){
         if (n > 0){
-            float[] vetorDados = new float[n];
+            double[] vetorDados = new double[n];
 
-            if (tipo_organizacao_dados == ALEATORIO){
+            if (tipoOrganizacaoDados == ALEATORIO){
                 Random gerador = new Random(SEED);
-                float amplitude = LIMITE_MAXIMO - LIMITE_MINIMO;
+                double amplitude = LIMITE_MAXIMO - LIMITE_MINIMO;
                 for(int i=0;i<n;i++){
-                    vetorDados[i] = LIMITE_MINIMO + (gerador.nextFloat() * amplitude);
+                    vetorDados[i] = LIMITE_MINIMO + (gerador.nextDouble() * amplitude);
                 }
                 return vetorDados;
 
-            } else if (tipo_organizacao_dados == ORDENADO){
+            } else if (tipoOrganizacaoDados == ORDENADO){
                 for(int i=0;i<n;i++){
-                    vetorDados[i] = (float) i;
+                    vetorDados[i] = i;
                 }
                 return vetorDados;
 
-            } else if (tipo_organizacao_dados == INVERTIDO){
+            } else if (tipoOrganizacaoDados == INVERTIDO){
                 for(int i=0;i<n;i++){
-                    vetorDados[i] = (float) n - i;
+                    vetorDados[i] = n - i - 1;
                 }
                 return vetorDados;
 
             } else {
-                System.err.println("Erro ao gerar dados: tipo de organização inválido.");
-                return null;
+                throw new IllegalArgumentException("Erro ao gerar dados: tipo de organização inválido.");
             }
 
         } else {
-            System.err.println("Erro ao criar vetor de dados: tamanho inválido.");
-            return null;
+            throw new IllegalArgumentException("Erro ao criar vetor de dados: tamanho inválido.");
         }
     }
 }
