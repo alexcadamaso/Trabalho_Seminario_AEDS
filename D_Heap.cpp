@@ -8,29 +8,26 @@ Heap_d::Heap_d(bool isMax_Heap, int d){
     this->d = d;
 }
 
-/*void Heap_d::Heapify(vector<int> &valores3,int tamanho,int i){
-    int k = 1;
-    int filho = (d * i) + k;
-    int melhor;
+void Heap_d::Heapify(vector<int> &valores3,int tamanho,int i){
+    int filho, melhor = i;
 
-    while(int n <= d){
-      int n = 1;
+    for(int k = 1; k <= d; k++){
 
-      if(filho < tamanho && valores3[filho] > valores3[i]){
+      filho = (d * i) + k;
+
+      if(filho < tamanho && valores3[filho] > valores3[melhor]){
          melhor = filho;
-      } else {
-         melhor = i;
-      }
-      if(melhor != i){
+      } 
+      
+    }
+
+    if(melhor != i){
          swap(valores3[melhor],valores3[i]);
          Heapify(valores3,tamanho,melhor);
-      }
-
-      n ++;
-      k ++;
-      filho = (d * i) + k;
     }
-}*/
+
+    
+}
 
 void Heap_d::Build_Heap(vector<int> &valores3, int tamanho){
     for(int i = (tamanho - 2)/d; i >= 0; i--){
