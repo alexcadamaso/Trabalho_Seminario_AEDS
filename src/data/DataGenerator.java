@@ -1,14 +1,15 @@
 package data;
 import java.util.Random;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 
 // classe para gerar os dados de ordenação
 public class DataGenerator {
     // definição de constantes
     public static final long SEED = 42L;
-
     public static final int ALEATORIO = 1;
     public static final int ORDENADO = 2;
     public static final int INVERTIDO = 3;
@@ -48,6 +49,7 @@ public class DataGenerator {
         }
     }
 
+    // classe para gravar os dados gerados em arquivos .dat
     public static void gravarDadosArquivo(int[] dados, String caminho_arquivo){
         try (BufferedWriter escrever = new BufferedWriter(new FileWriter(caminho_arquivo));) {
             for(int i=0;i<dados.length;i++){
@@ -56,7 +58,26 @@ public class DataGenerator {
             }
         } catch (IOException e){
             throw new RuntimeException("Erro ao gravar dados no arquivo: " + caminho_arquivo, e);
+        } 
+    }
+
+    // classe para ler os dados do arquivo .dat
+    public static int[] lerDadosArquivo(int n, String caminho_arquivo){
+        if(n < 0 || n > 1000000){
+            throw new IllegalArgumentException("Erro ao ler dados do arquivo: tamanho errado - " + n + " - limite máximo de 1.000.000");
         }
-        
+
+        int[] vetorDados = new int[n];
+        try (BufferedReader ler = new BufferedReader(new FileReader(caminho_arquivo))){
+            for(int i=0;i<n;i++){
+                String linha = ler.readLine();
+                if(linha != null){
+                    vetorDados[i] = Integer.parseInt(linha.trim());
+                }
+            }
+            return vetorDados;
+        } catch(IOException e){
+            throw new RuntimeException("Erro ao ler dados do arquivo: " + caminho_arquivo, e);
+        }
     }
 }

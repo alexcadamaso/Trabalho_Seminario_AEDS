@@ -3,12 +3,12 @@ import heap.Heap;
 
 public class Main {
     public static void main(String[] args){
-        // gerar dados para ordenação
-        int n = 12;
+        // lendo os dados para ordenação
+        int n = 13;
+        String caminho_arquivo = "src/data/aleatorio.dat";
         try{
-            int[] vetorDados = DataGenerator.gerarDados(n, DataGenerator.ALEATORIO);
-            //DataGenerator.gravarDadosArquivo(vetorDados, "src/data/invertido.dat");
-            //System.out.println("Arquivo gravado");
+            int[] vetorDados = DataGenerator.lerDadosArquivo(n, caminho_arquivo);
+            
             for(int i=0;i<n;i++){
                 System.out.println(vetorDados[i]);
                 if(i == 20){
