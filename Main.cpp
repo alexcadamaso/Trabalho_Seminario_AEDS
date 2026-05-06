@@ -14,12 +14,13 @@ vector<int> valores;
 vector<int> valores2;
 int tam;
 
-srand(42);
+//srand(42);
 
-for(int i = 0; i <= 1000000; i++){
-    int num = rand() % 101;
-    valores.push_back(num);
-    valores2.push_back(num);
+for(int i = 0; i <= 15; i++){
+    //int num = rand() % 101;
+    //valores.push_back(num);
+    //valores2.push_back(num);
+    valores.push_back(i);
 }
 
 tam = valores.size();
@@ -35,11 +36,10 @@ clock_t fim2 = clock() - inicio2;
 
 cout << "Tempo gasto: " << (float)fim1/CLOCKS_PER_SEC << "\n";
 cout << "Tempo gasto: " << (float)fim2/CLOCKS_PER_SEC << "\n";
-/*cout << "Vetor ordenado: ";
+cout << "Vetor ordenado: ";
 for(int i = 0; i < tam ; i++){
     cout << valores[i] << " ";
 }
 
-*/
     return 0;
 }
