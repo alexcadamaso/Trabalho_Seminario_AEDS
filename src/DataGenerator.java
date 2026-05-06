@@ -4,8 +4,6 @@ import java.util.Random;
 public class DataGenerator {
     // definição de constantes
     public static final long SEED = 42L;
-    public static final double LIMITE_MAXIMO = 1000000.0;
-    public static final double LIMITE_MINIMO = -1000000.0;
 
     public static final int ALEATORIO = 1;
     public static final int ORDENADO = 2;
@@ -14,27 +12,26 @@ public class DataGenerator {
     private DataGenerator(){}
 
     // função para gerar dados de acordo com a ordenação escolhida
-    public static double[] gerarDados(int n, int tipoOrganizacaoDados){
+    public static int[] gerarDados(int n, int tipoOrganizacaoDados){
         if (n > 0){
-            double[] vetorDados = new double[n];
+            int[] vetorDados = new int[n];
 
             if (tipoOrganizacaoDados == ALEATORIO){
                 Random gerador = new Random(SEED);
-                double amplitude = LIMITE_MAXIMO - LIMITE_MINIMO;
                 for(int i=0;i<n;i++){
-                    vetorDados[i] = LIMITE_MINIMO + (gerador.nextDouble() * amplitude);
+                    vetorDados[i] = gerador.nextInt(n) + 1;
                 }
                 return vetorDados;
 
             } else if (tipoOrganizacaoDados == ORDENADO){
                 for(int i=0;i<n;i++){
-                    vetorDados[i] = i;
+                    vetorDados[i] = i + 1;
                 }
                 return vetorDados;
 
             } else if (tipoOrganizacaoDados == INVERTIDO){
                 for(int i=0;i<n;i++){
-                    vetorDados[i] = n - i - 1;
+                    vetorDados[i] = n - 1;
                 }
                 return vetorDados;
 
