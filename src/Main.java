@@ -3,7 +3,7 @@ public class Main {
         // gerar dados para ordenação
         int n = 12;
         try{
-            double[] vetorDados = DataGenerator.gerarDados(n, DataGenerator.INVERTIDO);
+            int[] vetorDados = DataGenerator.gerarDados(n, DataGenerator.ALEATORIO);
             for(int i=0;i<n;i++){
                 if(i == 3){
                     vetorDados[i] = 2;
@@ -14,7 +14,7 @@ public class Main {
                 System.out.println(vetorDados[i]);
             }
 
-            Heap.heapSort(vetorDados, n);
+            Heap.heapSort(vetorDados, n, Heap.MIN_HEAP);
             System.out.println("Dados ordenados com sucesso: ");
             for(int i=0;i<n;i++){
                 System.out.println(vetorDados[i]);
