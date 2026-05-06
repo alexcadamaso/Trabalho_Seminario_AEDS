@@ -15,24 +15,27 @@ void Max_Min::Max_Heapify(vector<int> &valores, int tamanho,int i){
     int melhor = i;
 
     if(isMaxHeap){
+
        if(esquerda < tamanho && valores[esquerda] > valores[melhor]){
-         melhor = esquerda;
-      }   else  {
-         melhor = i;
-      }
+        melhor = esquerda;
+       } else {
+        melhor = i;
+       }
        if(direita < tamanho && valores[direita] > valores[melhor]){
-         melhor = direita;
-      }
-   } else{
-        if(esquerda < tamanho && valores[esquerda] < valores[melhor]){
-         melhor = esquerda;
-      }  else  {
-         melhor = i;
-      }
+        melhor = direita;
+       }
+
+    } else {
+
+       if(esquerda < tamanho && valores[esquerda] < valores[melhor]){
+        melhor = esquerda;
+       } else {
+        melhor = i;
+       }
        if(direita < tamanho && valores[direita] < valores[melhor]){
-         melhor = direita;
-      }
-   }
+        melhor = direita;
+       }
+    }
 
     if(melhor != i){
         swap(valores[melhor],valores[i]);
@@ -40,12 +43,14 @@ void Max_Min::Max_Heapify(vector<int> &valores, int tamanho,int i){
     }
 
 }
- void Max_Min::Build_Max_Heap(vector<int> &valores, int tamanho){
+
+void Max_Min::Build_Max_Heap(vector<int> &valores, int tamanho){
     for(int i = tamanho/2 - 1; i >= 0; i--){
         Max_Heapify(valores,tamanho,i);
     }
- }
- void Max_Min::Heapsort(vector<int> &valores,int tamanho){
+}
+
+void Max_Min::Heapsort(vector<int> &valores,int tamanho){
 
     Build_Max_Heap(valores,tamanho);
 
@@ -59,6 +64,6 @@ void Max_Min::Max_Heapify(vector<int> &valores, int tamanho,int i){
       
     }
  
- }
+}
 
 
