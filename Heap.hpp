@@ -4,6 +4,7 @@
 
 class Max_Min {
   private:
+  
   bool isMaxHeap;
 
   public:
@@ -15,7 +16,6 @@ class Max_Min {
 
 
 };
-
 
 
 #endif
