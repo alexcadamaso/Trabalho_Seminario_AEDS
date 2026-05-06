@@ -35,7 +35,6 @@ public class Heap {
 
     public static void heapify(int[] vetorOrdenar, int n, int indicePai, Comparator<Integer> tipoHeap){
         int noSubir = indicePai;
-
         int indiceFilhoEsquerda = Heap.filho_esquerda(indicePai);
         int indiceFilhoDireita = Heap.filho_direita(indicePai);
 
@@ -46,7 +45,6 @@ public class Heap {
         if(indiceFilhoDireita < n && tipoHeap.compare(vetorOrdenar[indiceFilhoDireita], vetorOrdenar[noSubir]) > 0){
             noSubir = indiceFilhoDireita;
         }
-
 
         if (noSubir != indicePai){
             Heap.swap(vetorOrdenar, indicePai, noSubir);
@@ -62,14 +60,5 @@ public class Heap {
             Heap.heapify(vetorOrdenar, n, i, tipoHeap);
         }
     }
-
-    public static void heapSort(int[] vetorOrdenar, int n, Comparator<Integer> tipoHeap){
-        Heap.buildHeap(vetorOrdenar, n,tipoHeap);
-
-        for(int i=n - 1;i>0;i--){
-            Heap.swap(vetorOrdenar, 0 , i);
-            Heap.heapify(vetorOrdenar, i , 0, tipoHeap);
-        }
-    } 
-             
+      
 }
