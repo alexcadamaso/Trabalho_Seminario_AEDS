@@ -9,6 +9,11 @@ public class Heap {
 
     // função para realizar troca no heap
     public static void swap(int[] vetor, int a, int b){
+        if(a < 0 || a >= vetor.length || b < 0 || b >= vetor.length){
+            System.out.println("a="+a+"  b="+b);
+            //throw new IllegalArgumentException("Indices inválidos para realizar swap");
+        }
+
         int aux = vetor[a];
         vetor[a] = vetor[b];
         vetor[b] = aux;
