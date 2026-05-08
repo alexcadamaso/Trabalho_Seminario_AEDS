@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .vscode/
 env/
 bin/
@@ -8,6 +9,9 @@ build/
 *.log
 .DS_Store
 =======
+=======
+build/
+>>>>>>> 79da600 (Criação do Gitignore)
 programa
 test
 *.exe
