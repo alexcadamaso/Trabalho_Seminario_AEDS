@@ -20,4 +20,5 @@ func main() {
 
 	resultado := heap.HeapSortMax(dados, len(dados))
 	fmt.Println("Ordenado: ", resultado)
+
 }
