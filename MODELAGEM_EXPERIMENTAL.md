@@ -134,7 +134,7 @@ Portanto, o custo computacional é expressado por:
 $$O(n \cdot \log n)$$.
 
 
-### Heap D-ário (D = 3)
+### Smoothsort
   | Operação                          | Complexidade          | Explicação |
   |-----------------------------------|-----------------------| -----------|
   | Construção das heaps de Leonardo  | $O(n)$                | O algoritmo constrói heap especiais chamadas de heaps de Leonardo. |
