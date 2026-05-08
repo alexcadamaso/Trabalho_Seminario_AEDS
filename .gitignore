@@ -1,0 +1,7 @@
+bin/
+*.exe
+build/
+dist/
+vendor/
+.vscode/
+.DS_Store
