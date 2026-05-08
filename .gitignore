@@ -1,5 +1,4 @@
-build/
 programa
-test
+teste
 *.exe
 *.o
