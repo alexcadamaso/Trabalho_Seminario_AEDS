@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package main
 import "fmt"
 import "os"
@@ -18,3 +19,7 @@ func main() {
     resultado := heap.HeapSortMax(dados, len(dados))
     fmt.Println("Ordenado: ", resultado)
 }
+=======
+
+
+>>>>>>> aed509d (implementa Heapsort(min) em Go)
