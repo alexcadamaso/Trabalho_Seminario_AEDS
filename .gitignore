@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .vscode/
 env/
 bin/
@@ -6,3 +7,9 @@ results/*.csv
 build/
 *.log
 .DS_Store
+=======
+programa
+test
+*.exe
+*.o
+>>>>>>> 9731e20 (Adiciona gitignore)
