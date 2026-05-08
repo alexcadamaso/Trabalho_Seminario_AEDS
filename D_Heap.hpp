@@ -8,10 +8,10 @@ class Heap_d {
   int d;
 
   public:
-  Heap_d(int d);
-  void Heapify(std::vector<int> &valores3,int tamanho, int i);
-  void Build_Heap(std::vector<int> &valores3,int tamanho);
-  void Heapsort2(std::vector<int> & valorse3,int tamanho);
+  Heap_d(bool isMax_Heap,int d);
+  void Heapify(std::vector<int> &valores3,int tamanho,int i);
+  void Build_Heap(std::vector<int> &valores3, int tamanho);
+  void Heapsort2(std::vector<int> & valores3,int tamanho);
 
   
 };
