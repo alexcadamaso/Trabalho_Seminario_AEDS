@@ -1,93 +1,129 @@
 package smoothsort;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
-import heap.Heap;
 
 public class SmoothSort {
-    private SmoothSort(){}
 
-    public static int[] numerosLeonardo(int n){
-        if(n <= 0) throw new IllegalArgumentException("O valor de n deve ser maior que 0");
+    static final int[] NLEO = {
+        1, 1, 3, 5, 9, 15, 25, 41, 67, 109,
+        177, 287, 465, 753, 1219, 1973, 3193, 5167, 8361, 13529, 21891,
+        35421, 57313, 92735, 150049, 242785, 392835, 635621, 1028457,
+        1664079, 2692537, 4356617, 7049155, 11405773, 18454929, 29860703,
+        48315633, 78176337, 126491971, 204668309, 331160281, 535828591,
+        866988873
+    };
 
-        int[] sequencia = new int[45];
-        sequencia[0] = 1;
+    public static void sift(int[] vetorDados, int ordemAtual, int indiceAtual) {
+        int valorRaiz = vetorDados[indiceAtual];
 
-        if(n == 1) return sequencia;
-        sequencia[1] = 1;
+        while (ordemAtual > 1) {
+            int indiceFilhoDireita  = indiceAtual - 1;
+            int indiceFilhoEsquerda = indiceAtual - 1 - NLEO[ordemAtual - 2];
 
-        int tamanhoFinal = 2;
-        for(int i=2;i<n;i++){
-            sequencia[i] = (sequencia[i-1] + sequencia[i-2] + 1);
-            tamanhoFinal ++;
-            if(sequencia[i] >= n){
+            if (valorRaiz >= vetorDados[indiceFilhoEsquerda] && valorRaiz >= vetorDados[indiceFilhoDireita]) {
                 break;
             }
-        }
 
-        return Arrays.copyOf(sequencia, tamanhoFinal);
-    }
-
-    public static int[] arvoresFloresta(int[] numerosLeonardo, int n){
-        List<Integer> arvores = new ArrayList<>();
-        int sobra = n;
-
-        for(int i=numerosLeonardo.length - 1;i>=0;i--){
-            while(sobra >= numerosLeonardo[i]){
-                arvores.add(numerosLeonardo[i]);
-                sobra-=numerosLeonardo[i];
+            if (vetorDados[indiceFilhoEsquerda] >= vetorDados[indiceFilhoDireita]) {
+                vetorDados[indiceAtual] = vetorDados[indiceFilhoEsquerda];
+                indiceAtual = indiceFilhoEsquerda;
+                ordemAtual -= 1;
+            } else {
+                vetorDados[indiceAtual] = vetorDados[indiceFilhoDireita];
+                indiceAtual = indiceFilhoDireita;
+                ordemAtual -= 2;
             }
         }
 
-        int[] resultado = new int[arvores.size()];
-        for(int i=0;i<resultado.length;i++){
-            resultado[i] = arvores.get(i);
-        }
-
-        return resultado;
+        vetorDados[indiceAtual] = valorRaiz;
     }
 
-    public static int obterIndiceK(int[] numerosLeonardo, int tamArvore){
-        for(int i=0;i<numerosLeonardo.length;i++){
-            if(numerosLeonardo[i] == tamArvore){
-                return i;
+    public static void trinkle(int[] vetorDados, int bitmap, int ordemAtual, int indiceAtual, boolean raizConfiavel) {
+        int valorRaiz = vetorDados[indiceAtual];
+
+        while (bitmap != 1) {
+            int indiceVizinhoEsquerda = indiceAtual - NLEO[ordemAtual];
+
+            if (vetorDados[indiceVizinhoEsquerda] <= valorRaiz) {
+                break;
             }
+
+            if (!raizConfiavel && ordemAtual > 1) {
+                int indiceFilhoDireita  = indiceAtual - 1;
+                int indiceFilhoEsquerda = indiceAtual - 1 - NLEO[ordemAtual - 2];
+                if (vetorDados[indiceFilhoDireita]  >= vetorDados[indiceVizinhoEsquerda] || vetorDados[indiceFilhoEsquerda] >= vetorDados[indiceVizinhoEsquerda]) {
+                    break;
+                }
+            }
+
+            vetorDados[indiceAtual] = vetorDados[indiceVizinhoEsquerda];
+            indiceAtual = indiceVizinhoEsquerda;
+
+            int zeros = Integer.numberOfTrailingZeros(bitmap & ~1);
+            bitmap >>>= zeros;
+            ordemAtual += zeros;
+            raizConfiavel = false;
         }
 
-        return -1;
+        if (!raizConfiavel) {
+            vetorDados[indiceAtual] = valorRaiz;
+            sift(vetorDados, ordemAtual, indiceAtual);
+        }
     }
 
-    public static int filhoDireita(int indiceRaiz){
-        return (indiceRaiz - 1);
-    }
-
-    public static int filhoEsquerda(int indiceRaiz, int k, int[] numerosLeonardo){
-        int ordem = numerosLeonardo[k -2];
-        return (indiceRaiz - 1 - ordem);
-    }
-
-    public static void sift(int[] numerosLeonardo, int[] vetorDados, int k, int indiceRaiz){
-        if(k < 2) return;
-
-        int indiceMaior = indiceRaiz;
-        int indiceFilhoDireita = SmoothSort.filhoDireita(indiceRaiz);
-        int indiceFilhoEsquerda = SmoothSort.filhoEsquerda(indiceRaiz, k, numerosLeonardo);
-        int kMaior = k;
-
-        if (indiceFilhoEsquerda < vetorDados.length && vetorDados[indiceMaior] < vetorDados[indiceFilhoEsquerda]){
-            indiceMaior = indiceFilhoEsquerda;
-            kMaior = k - 1;
+    public static void smoothSort(int[] vetorDados) {
+        int n = vetorDados.length;
+        if (n <= 1){
+            return;
         }
 
-        if (indiceFilhoDireita < vetorDados.length && vetorDados[indiceMaior] < vetorDados[indiceFilhoDireita]){
-            indiceMaior = indiceFilhoDireita;
-            kMaior = k - 2;
+        int indiceAtual = 0;
+        int bitmap = 1;
+        int ordemAtual = 1;
+
+        while (indiceAtual < n - 1) {
+            if ((bitmap & 3) == 3) {
+                sift(vetorDados, ordemAtual, indiceAtual);
+                bitmap >>>= 2;
+                ordemAtual += 2;
+            } else {
+                if (NLEO[ordemAtual - 1] >= (n - 1) - indiceAtual) {
+                    trinkle(vetorDados, bitmap, ordemAtual, indiceAtual, false);
+                } else {
+                    sift(vetorDados, ordemAtual, indiceAtual);
+                }
+
+                if (ordemAtual == 1) {
+                    bitmap <<= 1;
+                    ordemAtual--;
+                } else {
+                    bitmap <<= (ordemAtual - 1);
+                    ordemAtual = 1;
+                }
+            }
+            bitmap |= 1;
+            indiceAtual++;
         }
 
-        if(indiceMaior != indiceRaiz){
-            Heap.swap(vetorDados, indiceRaiz, indiceMaior);
-            SmoothSort.sift(numerosLeonardo, vetorDados, kMaior, indiceMaior);
-        }
+        trinkle(vetorDados, bitmap, ordemAtual, indiceAtual, false);
 
+        while (ordemAtual != 1 || bitmap != 1) {
+            if (ordemAtual <= 1) {
+                int zeros = Integer.numberOfTrailingZeros(bitmap & ~1);
+                bitmap >>>= zeros;
+                ordemAtual += zeros;
+            } else {
+                bitmap <<= 2;
+                bitmap ^= 7;
+                ordemAtual -= 2;
+
+                int indiceRaizEsquerda = indiceAtual - NLEO[ordemAtual] - 1;
+                int indiceRaizDireita  = indiceAtual - 1;
+
+                trinkle(vetorDados, bitmap >>> 1, ordemAtual + 1, indiceRaizEsquerda, true);
+                trinkle(vetorDados, bitmap, ordemAtual, indiceRaizDireita, true);
+            }
+            indiceAtual--;
+        }
     }
+
 }
+

@@ -7,10 +7,19 @@ import smoothsort.SmoothSort;
 public class Main {
     public static void main(String[] args){
         // lendo os dados para ordenação
-        int n = 9;
+        int n = 10;
         int d = 3;
-        String caminho_arquivo = "java/data/aleatorio.dat";
-        try{
+        String caminho_arquivo = "java/data/invertido.dat";
+        int[] vetorDados = DataGenerator.lerDadosArquivo(n, caminho_arquivo);
+
+        System.out.println("Antes:");
+        for(int i = 0; i < n; i++) System.out.println(vetorDados[i]);
+
+        SmoothSort.smoothSort(vetorDados);
+
+        System.out.println("Depois:");
+        for(int i = 0; i < n; i++) System.out.println(vetorDados[i]);
+        /*try{
             int[] vetorDados = DataGenerator.lerDadosArquivo(n, caminho_arquivo);
             for(int i=0;i<n;i++){
                 System.out.println(vetorDados[i]);
@@ -18,24 +27,6 @@ public class Main {
                     break;
                 }
             }
-            System.out.println("Leonarod: ");
-            int[] sequencia = SmoothSort.numerosLeonardo(n);
-            for(int i=0;i<sequencia.length;i++){
-                System.out.println(sequencia[i]);
-            }
-            int[] arvores = SmoothSort.arvoresFloresta(sequencia, n);
-            System.out.println("Tamanho das árvores: ");
-            
-            for(int i=0;i<arvores.length;i++){
-                System.out.println(arvores[i]);
-            }
-            System.out.println("Testando o sift");
-            int k = SmoothSort.obterIndiceK(sequencia, n);
-            SmoothSort.sift(sequencia, vetorDados, k, n-1);
-            for(int i=0;i<vetorDados.length;i++){
-                System.out.println(vetorDados[i]);
-            }
-            
 
            // HeapSort.heapSort(vetorDados, n, Heap.MAX_HEAP);
            //DHeap.DHeapSort(vetorDados, n, d);
@@ -47,10 +38,10 @@ public class Main {
                 if(i == 20){
                     break;
                 }
-            }*/
+            }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-        }
+        }*/
     }
 }
 
