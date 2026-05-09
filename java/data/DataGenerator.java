@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.File;
 
 // classe para gerar os dados de ordenação
 public class DataGenerator {
@@ -80,4 +81,17 @@ public class DataGenerator {
             throw new RuntimeException("Erro ao ler dados do arquivo: " + caminho_arquivo, e);
         }
     }
+
+    // função para apagar dados do arquivo output.dat
+    public static void limparArquivo(String caminho) {
+        File arquivo = new File(caminho);
+
+        if (arquivo.exists()) {
+            try (FileWriter escrever = new FileWriter(arquivo)) {
+            } catch (IOException e) {
+                System.err.println("Erro ao tentar limpar o arquivo output.dat : " + e.getMessage());
+            }
+        }
+    }
+
 }
