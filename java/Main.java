@@ -50,7 +50,7 @@ public class Main {
                         }
 
                         for (int d : dParaTestar) {
-                            System.out.println("Executando: " + algoritmo + " (d=" + d + ") | N=" + n + " | " + tipoOrdenacao);
+                            //System.out.println("Executando: " + algoritmo + " (d=" + d + ") | N=" + n + " | " + tipoOrdenacao);
 
                             long totalTempo = 0;
                             long totalTrocas = 0;
