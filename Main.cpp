@@ -1,88 +1,113 @@
 #include "Heap.hpp"
 #include "D_Heap.hpp"
+#include "Smoothsort.hpp"
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
+#include <chrono>
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <sys/resource.h>
 
 using namespace std;
+using namespace chrono;
+
+long MemoriaGasta(){
+    struct rusage uso;
+    getrusage(RUSAGE_SELF, &uso);
+    return uso.ru_maxrss;
+}
+
+vector<int> LerArquivo(string nome){
+    vector<int> valores;
+    ifstream arquivo(nome);
+    int num;
+    while(arquivo >> num){
+        valores.push_back(num);
+    }
+    arquivo.close();
+    return valores;
+}
+
+void RodarArquivo(ofstream& output, string caminho, string nome, Max_Min& heap_max, Max_Min& heap_min, Heap_d& heap3, Heap_d& heap4, Smoothsort& smooth){
+
+    vector<int> original = LerArquivo(caminho);
+    vector<int> copia = original;
+    auto ini = high_resolution_clock::now();
+    auto fim = high_resolution_clock::now();
+    double tempo;
+
+    tempo = 0;
+    for(int i = 0; i < 3; i++){
+        copia = original;
+        ini = high_resolution_clock::now();
+        heap_max.Heapsort(copia, copia.size());
+        fim = high_resolution_clock::now();
+        tempo += duration<double,milli>(fim - ini).count();
+    }
+    output << nome << ",HeapMax," << tempo / 3 << "," << MemoriaGasta() << "\n";
+
+    tempo = 0;
+    for(int i = 0; i < 3; i++){
+        copia = original;
+        ini = high_resolution_clock::now();
+        heap_min.Heapsort(copia, copia.size());
+        fim = high_resolution_clock::now();
+        tempo += duration<double,milli>(fim - ini).count();
+    }
+    output << nome << ",HeapMin," << tempo / 3 << "," << MemoriaGasta() << "\n";
+
+    tempo = 0;
+    for(int i = 0; i < 3; i++){
+        copia = original;
+        ini = high_resolution_clock::now();
+        heap3.Heapsort2(copia, copia.size());
+        fim = high_resolution_clock::now();
+        tempo += duration<double,milli>(fim - ini).count();
+    }
+    output << nome << ",DHeap3," << tempo / 3 << "," << MemoriaGasta() << "\n";
+
+    tempo = 0;
+    for(int i = 0; i < 3; i++){
+        copia = original;
+        ini = high_resolution_clock::now();
+        heap4.Heapsort2(copia, copia.size());
+        fim = high_resolution_clock::now();
+        tempo += duration<double,milli>(fim - ini).count();
+    }
+    output << nome << ",DHeap4," << tempo / 3 << "," << MemoriaGasta() << "\n";
+
+    tempo = 0;
+    for(int i = 0; i < 3; i++){
+        copia = original;
+        ini = high_resolution_clock::now();
+        smooth.sort(copia);
+        fim = high_resolution_clock::now();
+        tempo += duration<double,milli>(fim - ini).count();
+    }
+    output << nome << ",Smoothsort," << tempo / 3 << "," << MemoriaGasta() << "\n";
+
+
+    output.flush();
+}
 
 int main(){
-    
 
-/*
-Max_Min Algorithm(true);
-Max_Min Algorithm2(false);
-Heap_d Algorithm3(true,4);
-Heap_d Algorithm4(false,4);
+    ofstream output("output.dat");
+    output << fixed << setprecision(6);
+    output << "arquivo, algoritmo, tempo_ms, memoria_kb\n\n\n";
 
-vector<int> valores;
-vector<int> valores2;
-vector<int> valores3;
-vector<int> valores4;
+    Max_Min heap_max(true);
+    Max_Min heap_min(false);
+    Heap_d heap3(true,3);
+    Heap_d heap4(true,4);
+    Smoothsort smooth;
 
-int tam;
+    RodarArquivo(output, "data/ordenado.dat",  "ordenado.dat", heap_max, heap_min, heap3,heap4, smooth);
+    RodarArquivo(output, "data/invertido.dat", "invertido.dat",heap_max, heap_min, heap3,heap4, smooth);
+    RodarArquivo(output, "data/aleatorio.dat", "aleatorio.dat",heap_max, heap_min, heap3,heap4, smooth);
 
-srand(42);
+    output.close();
 
-for(int i = 0; i <= 15; i++){
-    int num = rand() % 101;
-    valores.push_back(num);
-    valores2.push_back(num);
-    //valores.push_back(i);
-    //valores2.push_back(i);
-    valores3.push_back(i);
-    valores4.push_back(i);
-}
-
-tam = valores.size();
-
-clock_t inicio = clock();
-Algorithm.Heapsort(valores,tam);
-clock_t fim1 = clock() - inicio;
-
-clock_t inicio2 = clock();
-Algorithm2.Heapsort(valores2,tam);
-clock_t fim2 = clock() - inicio2;
-
-clock_t inicio3 = clock();
-Algorithm3.Heapsort2(valores3,tam);
-clock_t fim3 = clock() - inicio3;
-
-clock_t inicio4 = clock();
-Algorithm4.Heapsort2(valores4,tam);
-clock_t fim4 = clock() - inicio4;
-
-
-
-cout << "Tempo gasto: " << (float)fim1/CLOCKS_PER_SEC << "\n";
-cout << "Tempo gasto: " << (float)fim2/CLOCKS_PER_SEC << "\n";
-cout << "Tempo gasto: " << (float)fim3/CLOCKS_PER_SEC << "\n";
-cout << "Tempo gasto: " << (float)fim4/CLOCKS_PER_SEC << "\n";
-
-cout << "Vetor ordenado: ";
-for(int i = 0; i < tam ; i++){
-    cout << valores[i] << " "<< " ";
-    //cout << valores2[i] << " "<< "\t";
-    //cout << valores3[i] << " "<< "\n";
-    //cout << valores4[i] << " "<< "\n";
-}
-cout << "\n";
-for(int i = 0; i < tam ; i++){
-    cout << valores2[i] << " ";
-}
-cout << "\n";
-
-for(int i = 0; i < tam ; i++){
-    cout << valores3[i] << " "<< " ";
-    
-}
-cout << "\n";
-
-for(int i = 0; i < tam ; i++){
-    cout << valores4[i] << " "<< " ";
-}
-cout << "\n";
-*/
     return 0;
 }
