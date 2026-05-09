@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 // classe para gerar os dados de ordenação
 public class DataGenerator {
@@ -91,6 +94,52 @@ public class DataGenerator {
             } catch (IOException e) {
                 System.err.println("Erro ao tentar limpar o arquivo output.dat : " + e.getMessage());
             }
+        }
+    }
+
+    // função para gravar dados no arquivo output.dat
+    public static void gravarResultado(int indice, String algoritmo, int tamanho, String tipoOrdenacao, long tempoExecucao, long memoriaConsumida, long trocas) {
+        String caminhoPasta = "results";
+        String caminhoArquivo = caminhoPasta + "/output.dat";
+
+        try {
+            Files.createDirectories(Paths.get(caminhoPasta));
+            
+            File arquivo = new File(caminhoArquivo);
+            boolean arquivoVazio = !arquivo.exists() || arquivo.length() == 0;
+
+            try (FileWriter escrever = new FileWriter(arquivo, true); PrintWriter modoEscrever = new PrintWriter(escrever)) {
+
+                if (arquivoVazio) {
+                    modoEscrever.println("Indice;Algoritmo;Tamanho;Tipo;Tempo_ms;Memoria_KB;Trocas");
+                }
+
+                modoEscrever.printf("%d;%s;%d;%s;%d;%d;%d%n", 
+                                    indice, algoritmo, tamanho, tipoOrdenacao, tempoExecucao, memoriaConsumida, trocas);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Erro ao gravar resultados: " + e.getMessage());
+        }
+    }
+
+    public static void gravarMedias(String caminhoResumo, String algoritmo, int tamanho, String tipo, long tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
+        try {
+            File arquivo = new File(caminhoResumo);
+            boolean novoArquivo = !arquivo.exists() || arquivo.length() == 0;
+
+            try (FileWriter escrever = new FileWriter(arquivo, true);
+                PrintWriter modoEscrever = new PrintWriter(escrever)) {
+                
+                if (novoArquivo) {
+                    modoEscrever.println("Algoritmo;Tamanho;Ordem;TempoMedio_ms;MemoriaMedia_KB;MemoriaFixa_KB;TrocasMedias");
+                }
+
+                modoEscrever.printf("%s;%d;%s;%d;%d;%d;%d%n", 
+                        algoritmo, tamanho, tipo, tempoMedio, memoriaMedia, memoriaFixa, trocasMedias);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao gravar resumo com as médias: " + e.getMessage());
         }
     }
 

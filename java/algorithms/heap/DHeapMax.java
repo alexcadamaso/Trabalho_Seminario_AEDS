@@ -1,6 +1,7 @@
 package dheapmax;
 
 public class DHeapMax {
+    public static long contadorTrocas = 0;
     private DHeapMax(){}
 
     // função para realizar troca no heap
@@ -12,6 +13,7 @@ public class DHeapMax {
         int aux = vetor[a];
         vetor[a] = vetor[b];
         vetor[b] = aux;
+        contadorTrocas++;
     }
 
     public static int paiD(int indiceFilho, int d){

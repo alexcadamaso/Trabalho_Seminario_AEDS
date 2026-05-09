@@ -1,0 +1,2 @@
+Algoritmo;Tamanho;Ordem;TempoMedio_ms;MemoriaMedia_KB;MemoriaFixa_KB;TrocasMedias
+D-Heap-Max;1000000;Invertido;158;22;3906;18333408

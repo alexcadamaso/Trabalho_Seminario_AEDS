@@ -3,7 +3,7 @@ import dheapmax.DHeapMax;
 import dheapmin.DHeapMin;
 import smoothsort.SmoothSort;
 
-public class Main {
+/*public class Main {
     public static void main(String[] args){
         // lendo os dados para ordenação
         int n = 1000000;
@@ -72,6 +72,81 @@ public class Main {
             
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
+        }
+    }
+}*/
+
+
+
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        int n = 1000000;
+        int d = 2;
+        String algoritmo = "D-Heap-Max";
+        String tipoOrdenacao = "Invertido";
+        String caminhoOutput = "results/output.dat";
+        String caminhoResumo = "results/statistics.dat";
+
+        long totalTempo = 0;
+        long totalTrocas = 0;
+        long totalConsumoMemoria = 0; 
+        long memoriaFixaVetorKB = (n * 4) / 1024;
+
+        DataGenerator.limparArquivo(caminhoOutput);
+        DataGenerator.limparArquivo(caminhoResumo);
+
+        try {
+            int[] original = DataGenerator.lerDadosArquivo(n, "java/data/invertido.dat");
+
+            int repeticoes = 20;
+            for (int i = 0; i < repeticoes; i++) {
+                int[] copia = original.clone();
+
+                Runtime runtime = Runtime.getRuntime();
+                runtime.gc(); 
+                long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+
+                DHeapMax.contadorTrocas = 0;
+
+                long inicio = System.nanoTime();
+                DHeapMax.DHeapSortMax(copia, n, d);
+                long fim = System.nanoTime();
+                
+                long memoriaDepois = runtime.totalMemory() - runtime.freeMemory();
+                long tempoExecucao = (fim - inicio) / 1000000;
+                long trocasRealizadas = DHeapMax.contadorTrocas;
+                long consumoMemoriaRodada = Math.max(0, (memoriaDepois - memoriaAntes) / 1024);
+
+                
+                DataGenerator.gravarResultado(
+                    (i + 1), algoritmo, n, tipoOrdenacao, tempoExecucao, consumoMemoriaRodada, trocasRealizadas
+                );
+
+                
+                totalTempo += tempoExecucao;
+                totalTrocas += trocasRealizadas;
+                totalConsumoMemoria += consumoMemoriaRodada; 
+            }
+            
+           
+            long tempoMedio = totalTempo / repeticoes;
+            long trocasMedias = totalTrocas / repeticoes;
+            long memMediaDinamica = totalConsumoMemoria / repeticoes; 
+
+            
+            DataGenerator.gravarMedias(
+                caminhoResumo, algoritmo, n, tipoOrdenacao, tempoMedio, memMediaDinamica, memoriaFixaVetorKB, trocasMedias
+            );
+
+            System.out.println("Testes finalizados com sucesso!");
+            System.out.println("Resumo gravado em: results/statistics.dat");
+
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace(); 
         }
     }
 }
