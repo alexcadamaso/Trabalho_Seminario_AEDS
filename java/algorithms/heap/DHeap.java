@@ -2,6 +2,7 @@ package dheap;
 import heap.Heap;
 
 public class DHeap {
+
     private DHeap(){}
 
     public static int paiD(int indiceFilho, int d){
@@ -19,7 +20,7 @@ public class DHeap {
 
         for(int i=0;i<d;i++){
             int filho = DHeap.filhoD(indicePai, d, i + 1);
-            if(filho < n && vetorOrdenar[indiceMelhor] < vetorOrdenar[filho]){
+            if(filho < n && vetorOrdenar[filho] > vetorOrdenar[indiceMelhor]){
                 indiceMelhor = filho;
             }
         }
