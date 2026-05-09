@@ -98,7 +98,7 @@ public class DataGenerator {
     }
 
     // função para gravar dados no arquivo output.dat
-    public static void gravarResultado(int indice, String algoritmo, int tamanho, String tipoOrdenacao, long tempoExecucao, long memoriaConsumida, long trocas) {
+    public static void gravarResultado(int indice, String algoritmo, int d, int tamanho, String tipoOrdenacao, long tempoExecucao, long memoriaConsumida, long trocas) {
         String caminhoPasta = "results";
         String caminhoArquivo = caminhoPasta + "/output.dat";
 
@@ -111,11 +111,11 @@ public class DataGenerator {
             try (FileWriter escrever = new FileWriter(arquivo, true); PrintWriter modoEscrever = new PrintWriter(escrever)) {
 
                 if (arquivoVazio) {
-                    modoEscrever.println("Indice;Algoritmo;Tamanho;Tipo;Tempo_ms;Memoria_KB;Trocas");
+                    modoEscrever.println("Indice;Algoritmo;Aridade_D;Tamanho;Tipo;Tempo_ms;Memoria_KB;Trocas");
                 }
 
-                modoEscrever.printf("%d;%s;%d;%s;%d;%d;%d%n", 
-                                    indice, algoritmo, tamanho, tipoOrdenacao, tempoExecucao, memoriaConsumida, trocas);
+                modoEscrever.printf("%d;%s;%d;%d;%s;%d;%d;%d%n", 
+                                    indice, algoritmo, d, tamanho, tipoOrdenacao, tempoExecucao, memoriaConsumida, trocas);
             }
 
         } catch (IOException e) {
@@ -123,8 +123,9 @@ public class DataGenerator {
         }
     }
 
-    public static void gravarMedias(String caminhoResumo, String algoritmo, int tamanho, String tipo, long tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
+    public static void gravarMedias(String caminhoResumo, String algoritmo, int d,int tamanho, String tipo, long tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
         try {
+            Files.createDirectories(Paths.get("results"));
             File arquivo = new File(caminhoResumo);
             boolean novoArquivo = !arquivo.exists() || arquivo.length() == 0;
 
@@ -132,11 +133,11 @@ public class DataGenerator {
                 PrintWriter modoEscrever = new PrintWriter(escrever)) {
                 
                 if (novoArquivo) {
-                    modoEscrever.println("Algoritmo;Tamanho;Ordem;TempoMedio_ms;MemoriaMedia_KB;MemoriaFixa_KB;TrocasMedias");
+                    modoEscrever.println("Algoritmo;Aridade_D;Tamanho;Ordem;TempoMedio_ms;MemoriaMedia_KB;MemoriaFixa_KB;TrocasMedias");
                 }
 
-                modoEscrever.printf("%s;%d;%s;%d;%d;%d;%d%n", 
-                        algoritmo, tamanho, tipo, tempoMedio, memoriaMedia, memoriaFixa, trocasMedias);
+                modoEscrever.printf("%s;%d;%d;%s;%d;%d;%d;%d%n", 
+                        algoritmo, d, tamanho, tipo, tempoMedio, memoriaMedia, memoriaFixa, trocasMedias);
             }
         } catch (IOException e) {
             System.err.println("Erro ao gravar resumo com as médias: " + e.getMessage());

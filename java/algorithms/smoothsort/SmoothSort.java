@@ -1,4 +1,5 @@
 package smoothsort;
+import dheapmax.DHeapMax;
 
 public class SmoothSort {
 
@@ -23,10 +24,12 @@ public class SmoothSort {
             }
 
             if (vetorDados[indiceFilhoEsquerda] >= vetorDados[indiceFilhoDireita]) {
+                dheapmax.DHeapMax.contadorTrocas++;
                 vetorDados[indiceAtual] = vetorDados[indiceFilhoEsquerda];
                 indiceAtual = indiceFilhoEsquerda;
                 ordemAtual -= 1;
             } else {
+                dheapmax.DHeapMax.contadorTrocas++;
                 vetorDados[indiceAtual] = vetorDados[indiceFilhoDireita];
                 indiceAtual = indiceFilhoDireita;
                 ordemAtual -= 2;
@@ -55,6 +58,7 @@ public class SmoothSort {
             }
 
             vetorDados[indiceAtual] = vetorDados[indiceVizinhoEsquerda];
+            dheapmax.DHeapMax.contadorTrocas++;
             indiceAtual = indiceVizinhoEsquerda;
 
             int zeros = Integer.numberOfTrailingZeros(bitmap & ~1);

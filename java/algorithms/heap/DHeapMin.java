@@ -5,6 +5,7 @@ public class DHeapMin {
     private DHeapMin(){}
 
     public static void DheapifyMin(int[] vetorOrdenar, int n, int d, int indicePai){
+        if(d < 2) d = 2;
         int indiceMelhor = indicePai;
 
         for(int i=0;i<d;i++){
