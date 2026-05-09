@@ -12,7 +12,6 @@ int main() {
     try {
         GerenciadorArquivos gerenciador(repeticoes, "results/output.dat", "results/statistics.dat");
         gerenciador.rodar(tipos, algoritmos, valoresD, pastaData);
-        cout << "\n>>> Todos os testes finalizados com sucesso! <<<\n";
     } catch (const exception& e) {
         cerr << "Erro critico: " << e.what() << "\n";
         return 1;
