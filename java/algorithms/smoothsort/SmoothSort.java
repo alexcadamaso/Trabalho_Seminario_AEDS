@@ -3,6 +3,7 @@ import dheapmax.DHeapMax;
 
 public class SmoothSort {
 
+    // Sequência de números de Leonardo pré-calculados
     static final int[] NLEO = {
         1, 1, 3, 5, 9, 15, 25, 41, 67, 109,
         177, 287, 465, 753, 1219, 1973, 3193, 5167, 8361, 13529, 21891,
@@ -12,6 +13,7 @@ public class SmoothSort {
         866988873
     };
 
+    // Mantém a propriedade de max-heap dentro de uma única árvore de Leonardo
     public static void sift(int[] vetorDados, int ordemAtual, int indiceAtual) {
         int valorRaiz = vetorDados[indiceAtual];
         int indiceInicial = indiceAtual;
@@ -38,12 +40,13 @@ public class SmoothSort {
         }
 
         if (indiceAtual != indiceInicial) {
-            DHeapMax.contadorTrocas++;
+            DHeapMax.contadorTrocas++; // Cada movimentação é contabilizada no contador de trocas
         }
 
         vetorDados[indiceAtual] = valorRaiz;
     }
 
+    // Reordena as raízes dos heaps da floresta, garantindo que a raiz mais à direita seja a maior 
     public static void trinkle(int[] vetorDados, int bitmap, int ordemAtual, int indiceAtual, boolean raizConfiavel) {
         int valorRaiz = vetorDados[indiceAtual];
         int indiceInicial = indiceAtual;
@@ -82,6 +85,7 @@ public class SmoothSort {
         }
     }
 
+    // Algoritmo SmoothSort para ordenar o vetor
     public static void smoothSort(int[] vetorDados) {
         if(vetorDados == null){
             throw new IllegalArgumentException("Erro: o vetor para ordenação não pode ser nulo");

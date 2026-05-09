@@ -4,6 +4,7 @@ import dheapmax.DHeapMax;
 public class DHeapMin {
     private DHeapMin(){}
 
+    // Garante a propriedade de min-heap para que o menor valor seja o pai
     public static void DheapifyMin(int[] vetorOrdenar, int n, int d, int indicePai){
         if(d < 2) d = 2;
         int indiceMelhor = indicePai;
@@ -21,6 +22,7 @@ public class DHeapMin {
         }
     }
 
+    // Constrói um min-heap a partir de um vetor desordenado
     public static void buildDHeapMin(int[] vetorOrdenar, int n, int d){
         int indiceUltimoNo = n - 1;
         int indiceUltimoPai = DHeapMax.paiD(indiceUltimoNo, d);
@@ -29,6 +31,7 @@ public class DHeapMin {
         }
     }
 
+    // Ordena o vetor em ordem descrescente usando o algoritmo D-Heap Min
     public static void DHeapSortMin(int[] vetorOrdenar, int n, int d){
         if(vetorOrdenar == null){
             throw new IllegalArgumentException("Erro: o vetor para ordenação não pode ser nulo");
@@ -39,7 +42,7 @@ public class DHeapMin {
         if(d < 2){
             throw new IllegalArgumentException("Erro: o valor de d-Aridade deve ser maior que 2: " + d);
         }
-        
+
         DHeapMin.buildDHeapMin(vetorOrdenar, n, d);
 
         for(int i=n-1;i>0;i--){

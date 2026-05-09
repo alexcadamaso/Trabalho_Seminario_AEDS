@@ -1,10 +1,11 @@
 package dheapmax;
 
 public class DHeapMax {
+    // Contador global de trocas realizadas durante a ordenação, compartilhado com DHeapMin e SmoothSort para centralizar a métrica.
     public static long contadorTrocas = 0;
     private DHeapMax(){}
 
-    // função para realizar troca no heap
+    // Função para realizar troca no heap
     public static void swap(int[] vetor, int a, int b){
         if(a < 0 || a >= vetor.length || b < 0 || b >= vetor.length){
             throw new IllegalArgumentException("Indices inválidos para realizar swap");
@@ -16,16 +17,19 @@ public class DHeapMax {
         contadorTrocas++;
     }
 
+    // Calcula o índice do pai de um nó em um d-heap
     public static int paiD(int indiceFilho, int d){
         int indicePai = (indiceFilho - 1) / d;
         return indicePai;
     }
 
+    // Calcula o índice do k-ésimo filho de um nó em um d-heap.
     public static int filhoD(int indicePai, int d, int k){
         int indiceFilho = (indicePai * d) + k;
         return indiceFilho;
     }
 
+    // Garante a propriedade de max-heap para que o maior valor seja o pai
     public static void DheapifyMax(int[] vetorOrdenar, int n, int d, int indicePai){
         if(d < 2) d = 2;
         int indiceMelhor = indicePai;
@@ -43,6 +47,7 @@ public class DHeapMax {
         }
     }
 
+    // Constrói um max-heap a partir de um vetor desordenado
     public static void buildDHeapMax(int[] vetorOrdenar, int n, int d){
         int indiceUltimoNo = n - 1;
         int indiceUltimoPai = paiD(indiceUltimoNo, d);
@@ -51,6 +56,7 @@ public class DHeapMax {
         }
     }
 
+    // Ordena o vetor em ordem crescente usando o algoritmo D-Heap Max
     public static void DHeapSortMax(int[] vetorOrdenar, int n, int d){
         if(vetorOrdenar == null){
             throw new IllegalArgumentException("Erro: o vetor para ordenação não pode ser nulo");

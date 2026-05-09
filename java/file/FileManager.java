@@ -10,9 +10,8 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-// classe para gerar os dados de ordenação
 public class FileManager {
-    // definição de constantes
+    // Definição de constantes
     public static final long SEED = 42L;
     public static final int ALEATORIO = 1;
     public static final int ORDENADO = 2;
@@ -20,7 +19,7 @@ public class FileManager {
 
     private FileManager(){}
 
-    // função para gerar dados de acordo com a ordenação escolhida
+    // Função para gerar dados de acordo com a ordenação escolhida
     public static int[] gerarDados(int n, int tipoOrganizacaoDados){
         if (n > 0){
             int[] vetorDados = new int[n];
@@ -53,7 +52,7 @@ public class FileManager {
         }
     }
 
-    // classe para gravar os dados gerados em arquivos .dat
+    // Função para gravar os dados gerados em arquivos .dat
     public static void gravarDadosArquivo(int[] dados, String caminho_arquivo){
         try (BufferedWriter escrever = new BufferedWriter(new FileWriter(caminho_arquivo));) {
             for(int i=0;i<dados.length;i++){
@@ -65,7 +64,7 @@ public class FileManager {
         } 
     }
 
-    // classe para ler os dados do arquivo .dat
+    // Função para ler os dados do arquivo .dat
     public static int[] lerDadosArquivo(int n, String caminho_arquivo){
         if(n <= 0 || n > 1000000){
             throw new IllegalArgumentException("Erro ao ler dados do arquivo: tamanho errado - " + n + " - de 1 até o limite máximo de 1.000.000");
@@ -85,7 +84,7 @@ public class FileManager {
         }
     }
 
-    // função para apagar dados do arquivo output.dat
+    // Função para apagar dados do arquivo output.dat
     public static void limparArquivo(String caminho) {
         File arquivo = new File(caminho);
 
@@ -97,7 +96,7 @@ public class FileManager {
         }
     }
 
-    // função para gravar dados no arquivo output.dat
+    // Função para gravar dados no arquivo output.dat
     public static void gravarResultado(int indice, String algoritmo, int d, int tamanho, String tipoOrdenacao, long tempoExecucao, long memoriaConsumida, long trocas) {
         String caminhoPasta = "resultsJava";
         String caminhoArquivo = caminhoPasta + "/output.dat";
@@ -123,6 +122,7 @@ public class FileManager {
         }
     }
 
+    // Função para gravar os dados médios no arquivo statistics.dat
     public static void gravarMedias(String caminhoResumo, String algoritmo, int d,int tamanho, String tipo, long tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
         try {
             Files.createDirectories(Paths.get("resultsJava"));

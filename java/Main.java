@@ -3,7 +3,21 @@ import dheapmax.DHeapMax;
 import dheapmin.DHeapMin;
 import smoothsort.SmoothSort;
 
+/**
+ * Classe principal para execução da bateria de testes dos algoritmos.
+ * 
+ * Realiza testes automatizados para os algoritmos DHeapMax, DHeapMin e SmoothSort, variando tamanho do vetor, 
+ * tipo de ordenação prévia e aridade d (para os D-Heaps). Os resultados são gravados em arquivos para análise posterior.
+ * 
+ * Metodologia:
+ *   - Cada configuração é executada 20 vezes para reduzir variância
+ *   - As médias de tempo, memória e trocas são gravadas separadamente
+ *   - O vetor original é clonado antes de cada execução para garantir que todos os algoritmos recebem os mesmos dados
+ */
+
 public class Main {
+
+    // Seleciona e executa o algoritmo de ordenação pelo nome.
     public static void selecionarExecutar(String nome, int[] vetor, int n, int d) {
         switch (nome) {
             case "DHeapMax":
@@ -20,7 +34,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Configuração para os testes
-        int[] tamanhos = {100, 1000, 10000, 100000, 1000000}; 
+        int[] tamanhos = {100, 1000, 10000, 100000, 1000000}; // tamanhos de entrada conforme pedido: 10², 10³, 10⁴, 10⁵, 10⁶
         String[] tipos = {"aleatorio", "ordenado", "invertido"};
         String[] algoritmos = {"DHeapMax", "DHeapMin", "SmoothSort"};
         int[] aridades = {2, 3, 4, 8}; 
@@ -38,7 +52,7 @@ public class Main {
                 for (String tipoOrdenacao : tipos) {
                     String caminhoDados = "java/file/" + tipoOrdenacao + ".dat";
                     int[] original = FileManager.lerDadosArquivo(n, caminhoDados);
-                    long memoriaFixaVetorKB = (n * 4) / 1024;
+                    long memoriaFixaVetorKB = (n * 4) / 1024; // cada int ocupa 4 bytes
 
                     for (String algoritmo : algoritmos) {
                         boolean eHeapEspecial = algoritmo.contains("DHeap");
@@ -50,7 +64,6 @@ public class Main {
                         }
 
                         for (int d : dParaTestar) {
-                            //System.out.println("Executando: " + algoritmo + " (d=" + d + ") | N=" + n + " | " + tipoOrdenacao);
 
                             long totalTempo = 0;
                             long totalTrocas = 0;
