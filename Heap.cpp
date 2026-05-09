@@ -18,8 +18,6 @@ void Max_Min::Max_Heapify(vector<int> &valores, int tamanho,int i){
 
        if(esquerda < tamanho && valores[esquerda] > valores[melhor]){
         melhor = esquerda;
-       } else {
-        melhor = i;
        }
        if(direita < tamanho && valores[direita] > valores[melhor]){
         melhor = direita;
@@ -29,9 +27,7 @@ void Max_Min::Max_Heapify(vector<int> &valores, int tamanho,int i){
 
        if(esquerda < tamanho && valores[esquerda] < valores[melhor]){
         melhor = esquerda;
-       } else {
-        melhor = i;
-       }
+       } 
        if(direita < tamanho && valores[direita] < valores[melhor]){
         melhor = direita;
        }
