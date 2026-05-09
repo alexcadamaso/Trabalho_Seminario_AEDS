@@ -1,4 +1,4 @@
-import data.DataGenerator;
+import file.FileManager;
 import dheapmax.DHeapMax;
 import dheapmin.DHeapMin;
 import smoothsort.SmoothSort;
@@ -30,14 +30,14 @@ public class Main {
         String caminhoResumo = "results/statistics.dat";
 
         // Limpando os dados anteriores
-        DataGenerator.limparArquivo(caminhoOutput);
-        DataGenerator.limparArquivo(caminhoResumo);
+        FileManager.limparArquivo(caminhoOutput);
+        FileManager.limparArquivo(caminhoResumo);
 
         try {
             for (int n : tamanhos) {
                 for (String tipoOrdenacao : tipos) {
-                    String caminhoDados = "java/data/" + tipoOrdenacao + ".dat";
-                    int[] original = DataGenerator.lerDadosArquivo(n, caminhoDados);
+                    String caminhoDados = "java/file/" + tipoOrdenacao + ".dat";
+                    int[] original = FileManager.lerDadosArquivo(n, caminhoDados);
                     long memoriaFixaVetorKB = (n * 4) / 1024;
 
                     for (String algoritmo : algoritmos) {
@@ -78,7 +78,7 @@ public class Main {
                                 long consumoMemoriaRodada = Math.max(0, (memoriaDepois - memoriaAntes) / 1024);
 
                                 
-                                DataGenerator.gravarResultado(
+                                FileManager.gravarResultado(
                                     (i + 1), algoritmo, d, n, tipoOrdenacao, tempoExecucao, consumoMemoriaRodada, trocasRealizadas
                                 );
 
@@ -92,7 +92,7 @@ public class Main {
                             long trocasMedias = totalTrocas / repeticoes;
                             long memMediaDinamica = totalConsumoMemoria / repeticoes;
 
-                            DataGenerator.gravarMedias(
+                            FileManager.gravarMedias(
                                 caminhoResumo, algoritmo, d, n, tipoOrdenacao, tempoMedio, memMediaDinamica, memoriaFixaVetorKB, trocasMedias
                             );
                         }

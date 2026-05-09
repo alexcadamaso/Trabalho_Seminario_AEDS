@@ -1,4 +1,4 @@
-package data;
+package file;
 import java.util.Random;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
@@ -11,14 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 // classe para gerar os dados de ordenação
-public class DataGenerator {
+public class FileManager {
     // definição de constantes
     public static final long SEED = 42L;
     public static final int ALEATORIO = 1;
     public static final int ORDENADO = 2;
     public static final int INVERTIDO = 3;
 
-    private DataGenerator(){}
+    private FileManager(){}
 
     // função para gerar dados de acordo com a ordenação escolhida
     public static int[] gerarDados(int n, int tipoOrganizacaoDados){
