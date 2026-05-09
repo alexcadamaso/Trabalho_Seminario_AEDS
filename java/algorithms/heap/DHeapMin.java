@@ -30,6 +30,16 @@ public class DHeapMin {
     }
 
     public static void DHeapSortMin(int[] vetorOrdenar, int n, int d){
+        if(vetorOrdenar == null){
+            throw new IllegalArgumentException("Erro: o vetor para ordenação não pode ser nulo");
+        }
+        if(n < 0 || n > vetorOrdenar.length){
+            throw new IllegalArgumentException("Erro: o tamanho n está inválido : " + n);
+        }
+        if(d < 2){
+            throw new IllegalArgumentException("Erro: o valor de d-Aridade deve ser maior que 2: " + d);
+        }
+        
         DHeapMin.buildDHeapMin(vetorOrdenar, n, d);
 
         for(int i=n-1;i>0;i--){

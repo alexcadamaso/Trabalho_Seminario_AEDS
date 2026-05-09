@@ -67,8 +67,8 @@ public class FileManager {
 
     // classe para ler os dados do arquivo .dat
     public static int[] lerDadosArquivo(int n, String caminho_arquivo){
-        if(n < 0 || n > 1000000){
-            throw new IllegalArgumentException("Erro ao ler dados do arquivo: tamanho errado - " + n + " - limite máximo de 1.000.000");
+        if(n <= 0 || n > 1000000){
+            throw new IllegalArgumentException("Erro ao ler dados do arquivo: tamanho errado - " + n + " - de 1 até o limite máximo de 1.000.000");
         }
 
         int[] vetorDados = new int[n];

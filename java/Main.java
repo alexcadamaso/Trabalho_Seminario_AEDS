@@ -99,8 +99,10 @@ public class Main {
                     }
                 }
             }
-            System.out.println("\n>>> Todos os testes finalizados com sucesso! <<<");
+            System.out.println(">>> Todos os testes foram finalizados com sucesso, confira em 'results'! <<<");
 
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro nos parâmetros de entrada: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Erro crítico durante a bateria de testes:");
             e.printStackTrace();

@@ -14,6 +14,7 @@ public class SmoothSort {
 
     public static void sift(int[] vetorDados, int ordemAtual, int indiceAtual) {
         int valorRaiz = vetorDados[indiceAtual];
+        int indiceInicial = indiceAtual;
 
         while (ordemAtual > 1) {
             int indiceFilhoDireita  = indiceAtual - 1;
@@ -36,11 +37,16 @@ public class SmoothSort {
             }
         }
 
+        if (indiceAtual != indiceInicial) {
+            DHeapMax.contadorTrocas++;
+        }
+
         vetorDados[indiceAtual] = valorRaiz;
     }
 
     public static void trinkle(int[] vetorDados, int bitmap, int ordemAtual, int indiceAtual, boolean raizConfiavel) {
         int valorRaiz = vetorDados[indiceAtual];
+        int indiceInicial = indiceAtual;
 
         while (bitmap != 1) {
             int indiceVizinhoEsquerda = indiceAtual - NLEO[ordemAtual];
@@ -68,12 +74,19 @@ public class SmoothSort {
         }
 
         if (!raizConfiavel) {
+            if (indiceAtual != indiceInicial) {
+                DHeapMax.contadorTrocas++;
+            }
             vetorDados[indiceAtual] = valorRaiz;
             sift(vetorDados, ordemAtual, indiceAtual);
         }
     }
 
     public static void smoothSort(int[] vetorDados) {
+        if(vetorDados == null){
+            throw new IllegalArgumentException("Erro: o vetor para ordenação não pode ser nulo");
+        }
+
         int n = vetorDados.length;
         if (n <= 1){
             return;
