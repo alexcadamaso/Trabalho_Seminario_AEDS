@@ -1,0 +1,18 @@
+arquivo, algoritmo, tempo_ms, memoria_kb
+
+
+ordenado.dat,HeapMax,821.266059,11612
+ordenado.dat,HeapMin,690.250806,11612
+ordenado.dat,DHeap3,544.860634,11612
+ordenado.dat,DHeap4,531.879601,11612
+ordenado.dat,Smoothsort,46.327026,11612
+invertido.dat,HeapMax,615.060744,11612
+invertido.dat,HeapMin,614.178215,11612
+invertido.dat,DHeap3,525.434155,11612
+invertido.dat,DHeap4,486.892824,11612
+invertido.dat,Smoothsort,653.720645,11612
+aleatorio.dat,HeapMax,760.376960,11612
+aleatorio.dat,HeapMin,756.164796,11612
+aleatorio.dat,DHeap3,663.147641,11612
+aleatorio.dat,DHeap4,648.886698,11612
+aleatorio.dat,Smoothsort,984.591015,11612
