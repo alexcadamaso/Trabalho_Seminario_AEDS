@@ -23,11 +23,11 @@ public class Main {
         int[] tamanhos = {100, 1000, 10000, 100000, 1000000}; 
         String[] tipos = {"aleatorio", "ordenado", "invertido"};
         String[] algoritmos = {"DHeapMax", "DHeapMin", "SmoothSort"};
-        int[] aridades = {2}; 
+        int[] aridades = {2, 3, 4, 8}; 
         
         int repeticoes = 20;
-        String caminhoOutput = "results/output.dat";
-        String caminhoResumo = "results/statistics.dat";
+        String caminhoOutput = "resultsJava/output.dat";
+        String caminhoResumo = "resultsJava/statistics.dat";
 
         // Limpando os dados anteriores
         FileManager.limparArquivo(caminhoOutput);

@@ -99,7 +99,7 @@ public class FileManager {
 
     // função para gravar dados no arquivo output.dat
     public static void gravarResultado(int indice, String algoritmo, int d, int tamanho, String tipoOrdenacao, long tempoExecucao, long memoriaConsumida, long trocas) {
-        String caminhoPasta = "results";
+        String caminhoPasta = "resultsJava";
         String caminhoArquivo = caminhoPasta + "/output.dat";
 
         try {
@@ -125,7 +125,7 @@ public class FileManager {
 
     public static void gravarMedias(String caminhoResumo, String algoritmo, int d,int tamanho, String tipo, long tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
         try {
-            Files.createDirectories(Paths.get("results"));
+            Files.createDirectories(Paths.get("resultsJava"));
             File arquivo = new File(caminhoResumo);
             boolean novoArquivo = !arquivo.exists() || arquivo.length() == 0;
 
