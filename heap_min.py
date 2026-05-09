@@ -23,3 +23,5 @@ def heap_sort(arr):
     for i in range(n-1, 0, -1):
         arr[0], arr[i] = arr[i], arr[0]
         heapify(arr, i, 0)
+    
+    arr.reverse()
