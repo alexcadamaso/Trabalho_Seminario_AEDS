@@ -1,6 +1,6 @@
 CXX := g++
 
-CXXFLAGS := -Wall -Wextra -Werror -std=c++17
+CXXFLAGS := -Wall -Wextra -Werror -std=c++17 -Iinclude
 
 LDFLAGS :=
 
@@ -10,13 +10,13 @@ APP_DIR := $(BUILD)
 
 TARGET := programa
 
-SRC := $(wildcard *.cpp)
+SRC := $(wildcard src/*.cpp)
 
-OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
+OBJECTS := $(SRC:src/%.cpp=$(OBJ_DIR)/%.o)
 
 all: build $(APP_DIR)/$(TARGET)
 
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
