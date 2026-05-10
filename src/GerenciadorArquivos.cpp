@@ -1,4 +1,6 @@
 #include "GerenciadorArquivos.hpp"
+#include "D_Heap.hpp"
+#include "Smoothsort.hpp"
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -13,32 +15,33 @@ GerenciadorArquivos::GerenciadorArquivos(int repeticoes, string caminhoLog, stri
     outResumo.open(caminhoResumo);
 
     if (!outLog.is_open() || !outResumo.is_open()) {
-        throw runtime_error("Erro ao criar arquivos. Verifique a pasta results/");
+        throw runtime_error("Erro ao abrir arquivos.");
     }
 
-    outLog    << "# output: dados brutos de cada execucao, cada algoritmo e rodado " << repeticoes << " vezes\n";
-    outLog    << "Indice;Algoritmo;D;Tipo;Tempo_ms;Memoria_B\n";
-
-    outResumo << "# statistics: media dos " << repeticoes << " resultados do output agrupados por algoritmo e tipo\n";
-    outResumo << "Algoritmo;D;Tipo;TempoMedio_ms;MemoriaMedia_B\n";
+    outLog << "Indice;Algoritmo;D;Tamanho;Tipo;Tempo_ms;Memoria_B\n";
+    outResumo << "Algoritmo;D;Tamanho;Tipo;TempoMedio_ms;MemoriaMedia_B\n";
 }
 
 GerenciadorArquivos::~GerenciadorArquivos() {
-    outLog.close();
-    outResumo.close();
+    if (outLog.is_open()) outLog.close();
+    if (outResumo.is_open()) outResumo.close();
 }
 
-void GerenciadorArquivos::rodar(vector<string> tipos, vector<string> algoritmos, vector<int> valoresD, string pastaData) {
-    for (int i = 0; i < (int)tipos.size(); i++) {
-        string caminho = pastaData + tipos[i] + ".dat";
-        vector<int> original = lerArquivo(caminho);
+void GerenciadorArquivos::rodar(vector<int> tamanhos, vector<string> tipos, vector<string> algoritmos, vector<int> valoresD, string pastaData) {
+    for (int n : tamanhos) {
+        for (const string& tipo : tipos) {
+            string caminho = pastaData + tipo + ".dat";
+            vector<int> original = lerArquivo(caminho, n);
 
-        for (int k = 0; k < (int)algoritmos.size(); k++) {
-            bool ehDHeap = (algoritmos[k] == "D-Heap-Max" || algoritmos[k] == "D-Heap-Min");
-            vector<int> dParaTestar = ehDHeap ? valoresD : vector<int>{1};
+            if (original.empty()) continue;
 
-            for (int l = 0; l < (int)dParaTestar.size(); l++) {
-                rodarBloco(original, tipos[i], algoritmos[k], dParaTestar[l]);
+            for (const string& algo : algoritmos) {
+                bool ehDHeap = (algo == "D-Heap-Max" || algo == "D-Heap-Min");
+                vector<int> dParaTestar = ehDHeap ? valoresD : vector<int>{1};
+
+                for (int d : dParaTestar) {
+                    rodarBloco(original, tipo, algo, d);
+                }
             }
         }
     }
@@ -48,6 +51,7 @@ void GerenciadorArquivos::rodarBloco(vector<int>& original, string tipo, string 
     bool isMax = (algo != "D-Heap-Min");
     double somaTempos = 0;
     long somaMemoria = 0;
+    int n = original.size();
 
     for (int i = 0; i < repeticoes; i++) {
         vector<int> copia = original;
@@ -55,13 +59,13 @@ void GerenciadorArquivos::rodarBloco(vector<int>& original, string tipo, string 
         long memoria = 0;
 
         executarUm(algo, copia, isMax, d, tempo, memoria);
-        gravarLinha(i + 1, algo, d, tipo, tempo, memoria);
+        gravarLinha(i + 1, algo, d, n, tipo, tempo, memoria);
 
         somaTempos += tempo;
         somaMemoria += memoria;
     }
 
-    gravarResumo(algo, d, tipo, somaTempos / repeticoes, somaMemoria / repeticoes);
+    gravarResumo(algo, d, n, tipo, somaTempos / repeticoes, somaMemoria / repeticoes);
 }
 
 void GerenciadorArquivos::executarUm(string algo, vector<int>& vetor, bool isMax, int d, double& tempo, long& memoria) {
@@ -79,39 +83,37 @@ void GerenciadorArquivos::executarUm(string algo, vector<int>& vetor, bool isMax
     tempo = duration<double, milli>(fim - ini).count();
 
     size_t memoriaVetor = vetor.size() * sizeof(int);
-
     if (algo == "D-Heap-Max" || algo == "D-Heap-Min") {
         size_t profundidade = (size_t)(log(vetor.size()) / log(d)) + 1;
-        size_t stack = profundidade * 32;
-        memoria = (long)(memoriaVetor + stack);
+        memoria = (long)(memoriaVetor + (profundidade * 32));
     } else {
-        memoria = (long)(memoriaVetor);
+        memoria = (long)memoriaVetor;
     }
 }
 
-vector<int> GerenciadorArquivos::lerArquivo(string caminho) {
+vector<int> GerenciadorArquivos::lerArquivo(string caminho, int n) {
     vector<int> dados;
+    dados.reserve(n);
     ifstream arq(caminho);
 
     if (!arq.is_open()) {
-        cerr << "Erro ao abrir: " << caminho << "\n";
+        cerr << "Erro: " << caminho << endl;
         return dados;
     }
 
     int num;
-    while (arq >> num) {
+    while (dados.size() < (size_t)n && arq >> num) {
         dados.push_back(num);
     }
-
     return dados;
 }
 
-void GerenciadorArquivos::gravarLinha(int indice, string algo, int d, string tipo, double tempo, long memoria) {
+void GerenciadorArquivos::gravarLinha(int indice, string algo, int d, int tamanho, string tipo, double tempo, long memoria) {
     string valorD = (algo == "SmoothSort") ? "-" : to_string(d);
-    outLog << indice << ";" << algo << ";" << valorD << ";" << tipo << ";" << tempo << ";" << memoria << "\n";
+    outLog << indice << ";" << algo << ";" << valorD << ";" << tamanho << ";" << tipo << ";" << tempo << ";" << memoria << "\n";
 }
 
-void GerenciadorArquivos::gravarResumo(string algo, int d, string tipo, double tempoMedio, long memoriaMedia) {
+void GerenciadorArquivos::gravarResumo(string algo, int d, int tamanho, string tipo, double tempoMedio, long memoriaMedia) {
     string valorD = (algo == "SmoothSort") ? "-" : to_string(d);
-    outResumo << algo << ";" << valorD << ";" << tipo << ";" << tempoMedio << ";" << memoriaMedia << "\n";
+    outResumo << algo << ";" << valorD << ";" << tamanho << ";" << tipo << ";" << tempoMedio << ";" << memoriaMedia << "\n";
 }
