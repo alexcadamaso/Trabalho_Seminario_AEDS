@@ -198,10 +198,16 @@ Trabalho_Seminario_AEDS/
 │   │   └── Smoothsort.cpp
 │   ├── .gitignore
 │   └── Makefile
-├── GO/
-│   └── ...
-├── JAVA/
-│   ├── java/
+├── go/
+│   ├── data_manipulation/
+|       ├── file_handler.go
+│   ├── heap/
+│      ├── heapDario.go
+│      └── maxHeap.go
+│      └── minHeap.go
+│      └── smoothsport.go
+│   ├── main.go
+├── java/
 │   │   ├── algorithms/
 │   │   │   ├── heap/
 │   │   │   │   ├── DHeapMax.java
@@ -217,7 +223,16 @@ Trabalho_Seminario_AEDS/
 │   ├── Main.java
 │   └── Makefile
 ├── PYTHON/
-│   └── ...
+│   └── data
+|   └── results
+|   └── src/python
+|      └── benchmark.py
+|      └── heap_d.py
+|      └── heap_max.py
+|      └── heap_min.py
+|      └── makefile.txt
+|      └── smoothsort.py
+|      └── utils.py
 └── data/                         # Arquivos de entrada compartilhados
     ├── aleatorio.dat
     ├── ordenado.dat
@@ -317,7 +332,7 @@ A tabela abaixo apresenta os tempos médios de execução no cenário de **Entra
 | **C** | Smoothsort | **0.042s** | Alta eficiência com manipulação direta de memória. |
 | **Java** | D-Heap-Max ($d=4$) | **0.263s** | Otimização JIT superou o binário nativo do C++. |
 | **C++** | D-Heap-Max ($d=4$) | **0.633s** | Desempenho sólido, mas sensível ao hardware utilizado. |
-| **Go** | *Preencher aqui* | *Preencher* | Compilação estática e gerenciamento de memória eficiente. |
+| **Go** | D-Heap | **0.01s** | Compilação estática e gerenciamento de memória eficiente. |
 | **Python** | Timsort (Nativo) | **~0.28s** | Desempenho atrelado a implementações internas em C. |
 
 ---
