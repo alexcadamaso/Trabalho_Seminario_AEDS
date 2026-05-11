@@ -56,10 +56,12 @@ func testar(n int, d int, caminhoEntrada string, caminhoSaida string) {
 	dadosMax := make([]int, len(dadosOriginais))
 	dadosMin := make([]int, len(dadosOriginais))
 	dadosDario := make([]int, len(dadosOriginais))
+	dadosSmooth := make([]int, len(dadosOriginais))
 	
 	copy(dadosMax, dadosOriginais)
 	copy(dadosMin, dadosOriginais)
 	copy(dadosDario, dadosOriginais)
+	copy(dadosSmooth, dadosOriginais)
 
 	// executa e mede os algoritmos
 	var resultados []Resultado
@@ -76,8 +78,11 @@ func testar(n int, d int, caminhoEntrada string, caminhoSaida string) {
 		heap.HeapSortDario(dadosDario, len(dadosDario), d)
 	}))
 
+	resultados = append(resultados, medirDesempenho("Smoothsort", func() {
+		heap.Smoothsort(dadosSmooth)
+	}))
+
 	// salva e exibi resultados
-	// Mudança aqui: os.OpenFile com O_APPEND para anexar ao fim do arquivo e O_CREATE para criá-lo se não existir
 	arquivo, err := os.OpenFile(caminhoSaida, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Printf("Não foi possível abrir o arquivo de saída: %v\n", err)
@@ -104,14 +109,14 @@ func testar(n int, d int, caminhoEntrada string, caminhoSaida string) {
 
 func main() {
 	// configurações do teste
-	n := 100             // tamanho da entrada
+	n := 1000000             // tamanho da entrada
 	d := 3                  
 	arquivoInputA := "../data/aleatorio.dat"
 	arquivoInputI := "../data/invertido.dat"
 	arquivoInputO := "../data/ordenado.dat"
 	arquivoOutput := "results.txt"
 
-	// Opcional: remover o arquivo antigo no início da execução para não misturar com execuções de dias anteriores
+	// remove o arquivo antigo no início da execução para não misturar com execuções anteriores
 	os.Remove(arquivoOutput)
 
 	testar(n, d, arquivoInputA, arquivoOutput)
