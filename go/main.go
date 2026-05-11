@@ -64,15 +64,15 @@ func testar(n int, d int, caminhoEntrada string, caminhoSaida string) {
 	// executa e mede os algoritmos
 	var resultados []Resultado
 
-	resultados = append(resultados, medirDesempenho("HeapSort Max (Binário)", func() {
+	resultados = append(resultados, medirDesempenho("HeapSort Max", func() {
 		heap.HeapSortMax(dadosMax, len(dadosMax))
 	}))
 
-	resultados = append(resultados, medirDesempenho("HeapSort Min (Binário)", func() {
+	resultados = append(resultados, medirDesempenho("HeapSort Min", func() {
 		heap.HeapSortMin(dadosMin, len(dadosMin))
 	}))
 
-	resultados = append(resultados, medirDesempenho(fmt.Sprintf("HeapSort %d-ário", d), func() {
+	resultados = append(resultados, medirDesempenho(fmt.Sprintf("HeapSort D-ário (d=%d)", d), func() {
 		heap.HeapSortDario(dadosDario, len(dadosDario), d)
 	}))
 
@@ -104,7 +104,7 @@ func testar(n int, d int, caminhoEntrada string, caminhoSaida string) {
 
 func main() {
 	// configurações do teste
-	n := 100000             // tamanho da entrada
+	n := 100             // tamanho da entrada
 	d := 3                  
 	arquivoInputA := "../data/aleatorio.dat"
 	arquivoInputI := "../data/invertido.dat"
