@@ -1,0 +1,4 @@
+algoritmo,tipo_entrada,tempo,memoria_kb,ordenado
+HeapMin,crescente,15.967872102000001,0.94140625,True
+HeapMin,decrescente,17.98497709100002,0.94140625,True
+HeapMin,desordenada,17.922162809999918,0.94140625,True
