@@ -51,9 +51,9 @@ Este repositório contém o desenvolvimento dos diferentes métodos de ordenaç�
 #### Conjunto de dados:
 
 Os experimentos utilizam três arquivos de entrada contendo
--1.000.000 de números aleatórios (aleatorio.txt);
--1.000.000 de números ordenados (ordenado.txt);
--1.000.000 de números invertidos (invertido.txt);
+- 1.000.000 de números aleatórios (aleatorio.txt);
+- 1.000.000 de números ordenados (ordenado.txt);
+- 1.000.000 de números invertidos (invertido.txt);
 
 Ademais, foram executados testes com diferentes tamanhos de entrada (com os mesmos dados dos arquivos citados). Os tamanhos de entrada foram: 10², 10³, 10⁴, 10⁵, 10⁶ elementos.
 
