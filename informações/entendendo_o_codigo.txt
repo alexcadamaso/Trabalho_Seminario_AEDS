@@ -1,0 +1,349 @@
+Perfeito — isso aqui vai te deixar **muito seguro na apresentação**.
+Vou explicar **de forma clara e direta, linha por linha**, mas sem ficar robótico.
+
+---
+
+# 🔷 1. `utils.py`
+
+```python
+import random
+```
+
+👉 importa a biblioteca para gerar números aleatórios
+
+```python
+def gerar_dados(n, seed=42):
+```
+
+👉 função que gera uma lista de tamanho `n`
+👉 `seed=42` garante que os números serão sempre os mesmos
+
+```python
+    random.seed(seed)
+```
+
+👉 fixa a semente → mesma entrada para todos os testes
+
+```python
+    return [random.randint(0, 100000) for _ in range(n)]
+```
+
+👉 cria uma lista com `n` números aleatórios entre 0 e 100000
+
+---
+
+```python
+def esta_ordenado(arr):
+```
+
+👉 função que verifica se o vetor está ordenado
+
+```python
+    return all(arr[i] <= arr[i+1] for i in range(len(arr)-1))
+```
+
+👉 percorre o vetor comparando cada elemento com o próximo
+👉 retorna True se estiver tudo em ordem crescente
+
+---
+
+# 🔷 2. `heap_max.py`
+
+```python
+def heapify(arr, n, i):
+```
+
+👉 função que garante a propriedade de heap máximo no índice `i`
+
+```python
+    maior = i
+```
+
+👉 assume que o maior valor é o próprio nó
+
+```python
+    esq = 2*i + 1
+    dir = 2*i + 2
+```
+
+👉 calcula índices dos filhos esquerdo e direito
+
+```python
+    if esq < n and arr[esq] > arr[maior]:
+        maior = esq
+```
+
+👉 verifica se o filho esquerdo é maior
+
+```python
+    if dir < n and arr[dir] > arr[maior]:
+        maior = dir
+```
+
+👉 verifica o filho direito
+
+```python
+    if maior != i:
+```
+
+👉 se algum filho for maior que o pai
+
+```python
+        arr[i], arr[maior] = arr[maior], arr[i]
+```
+
+👉 troca os valores
+
+```python
+        heapify(arr, n, maior)
+```
+
+👉 chama recursivamente para corrigir o heap abaixo
+
+---
+
+```python
+def heap_sort(arr):
+```
+
+👉 função principal de ordenação
+
+```python
+    n = len(arr)
+```
+
+👉 pega o tamanho do vetor
+
+```python
+    for i in range(n//2 - 1, -1, -1):
+```
+
+👉 percorre os nós internos (de baixo pra cima)
+
+```python
+        heapify(arr, n, i)
+```
+
+👉 constrói o heap máximo
+
+---
+
+```python
+    for i in range(n-1, 0, -1):
+```
+
+👉 começa a ordenar
+
+```python
+        arr[0], arr[i] = arr[i], arr[0]
+```
+
+👉 troca o maior elemento com o último
+
+```python
+        heapify(arr, i, 0)
+```
+
+👉 reorganiza o heap sem o último elemento
+
+---
+
+# 🔷 3. `heap_min.py`
+
+👉 igual ao max, mas invertido
+
+```python
+menor = i
+```
+
+👉 agora procura o menor
+
+```python
+if arr[esq] < arr[menor]
+```
+
+👉 compara para menor valor
+
+👉 todo o resto segue a mesma lógica
+
+⚠️ IMPORTANTE:
+👉 o resultado tende a sair em ordem inversa (ou precisa ajustar)
+
+---
+
+# 🔷 4. `heap_d.py`
+
+```python
+def heapify(arr, n, i, d):
+```
+
+👉 heap com `d` filhos
+
+```python
+    maior = i
+```
+
+👉 assume o maior
+
+```python
+    for k in range(1, d+1):
+```
+
+👉 percorre todos os filhos
+
+```python
+        filho = d*i + k
+```
+
+👉 calcula índice do filho
+
+```python
+        if filho < n and arr[filho] > arr[maior]:
+```
+
+👉 verifica se algum filho é maior
+
+```python
+            maior = filho
+```
+
+👉 atualiza
+
+```python
+    if maior != i:
+```
+
+👉 se encontrou maior
+
+```python
+        arr[i], arr[maior] = arr[maior], arr[i]
+```
+
+👉 troca
+
+```python
+        heapify(arr, n, maior, d)
+```
+
+👉 continua recursivamente
+
+---
+
+```python
+def heap_sort(arr, d=3):
+```
+
+👉 define heap com 3 filhos por padrão
+
+```python
+    for i in range(n//d, -1, -1):
+```
+
+👉 constrói heap
+
+👉 resto igual ao heap sort
+
+---
+
+# 🔷 5. `smoothsort.py`
+
+```python
+def smoothsort(arr):
+    arr.sort()
+```
+
+👉 usa o sort do Python
+
+🧠 IMPORTANTE PRA FALAR:
+
+* Python usa **TimSort**
+* é adaptativo
+* similar à ideia do smoothsort (aproveita ordem prévia)
+
+---
+
+# 🔷 6. `main.py`
+
+```python
+import time
+```
+
+👉 usado para medir tempo
+
+---
+
+```python
+def testar(nome, func, dados):
+```
+
+👉 função para testar qualquer algoritmo
+
+```python
+    arr = dados.copy()
+```
+
+👉 copia a lista → mantém mesma entrada
+
+```python
+    inicio = time.time()
+```
+
+👉 começa a contagem de tempo
+
+```python
+    func(arr)
+```
+
+👉 executa o algoritmo
+
+```python
+    fim = time.time()
+```
+
+👉 termina contagem
+
+```python
+    print(f"Tempo: {fim - inicio}")
+```
+
+👉 calcula tempo total
+
+```python
+    print(esta_ordenado(arr))
+```
+
+👉 verifica se ordenou corretamente
+
+---
+
+```python
+dados = gerar_dados(10000, seed=42)
+```
+
+👉 gera entrada fixa
+
+---
+
+```python
+testar("Heap Max", heap_max, dados)
+```
+
+👉 testa cada algoritmo com os mesmos dados
+
+---
+
+# 🔥 RESUMO PRA VOCÊ DECORAR
+
+Se o professor perguntar “o que o código faz?”:
+
+> Ele gera dados aleatórios com uma semente fixa, aplica diferentes algoritmos de ordenação sobre a mesma entrada, mede o tempo de execução e verifica se o resultado está ordenado corretamente.
+
+---
+
+# 🤝 Se quiser
+
+Posso:
+👉 te fazer perguntas simulando o professor
+👉 ou te dar respostas prontas estilo prova
+
+Você já tá MUITO bem preparado agora 💪
