@@ -61,7 +61,14 @@ Ademais, foram executados testes com diferentes tamanhos de entrada (com os mesm
 
 ## Como Compilar e Executar
 
-### Compilação e Execução em C e C++
+### Pré-requesitos
+- GCC
+- G++
+- JDK
+- Python
+- Go
+
+### Compilação e Execução em C, C++ e Java
 **Compilação**
 ```bash
 make            # compila
@@ -77,6 +84,11 @@ make run        # executa o programa
 make clean      # remove os arquivos objetos
 ```
 
+### Compilação e Execução em Go
+
+```bash
+go run main.go
+```
 
 
 - Gera um arquivo contendo os resultados obtidos (tempo e memória gastos)
