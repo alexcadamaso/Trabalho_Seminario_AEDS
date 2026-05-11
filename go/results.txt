@@ -1,0 +1,24 @@
+
+Teste com o arquivo: ../data/aleatorio.dat (n=100000)
+---------------- RELATÓRIO DE DESEMPENHO ----------------
+Algoritmo                 | Tempo           | Memória (Heap) 
+---------------------------------------------------------
+HeapSort Max (Binário)    | 24.948428ms     | 0 KB
+HeapSort Min (Binário)    | 21.492941ms     | 0 KB
+HeapSort 3-ário           | 20.800574ms     | 0 KB
+
+Teste com o arquivo: ../data/invertido.dat (n=100000)
+---------------- RELATÓRIO DE DESEMPENHO ----------------
+Algoritmo                 | Tempo           | Memória (Heap) 
+---------------------------------------------------------
+HeapSort Max (Binário)    | 13.882759ms     | 0 KB
+HeapSort Min (Binário)    | 8.404093ms      | 0 KB
+HeapSort 3-ário           | 7.24173ms       | 0 KB
+
+Teste com o arquivo: ../data/ordenado.dat (n=100000)
+---------------- RELATÓRIO DE DESEMPENHO ----------------
+Algoritmo                 | Tempo           | Memória (Heap) 
+---------------------------------------------------------
+HeapSort Max (Binário)    | 10.959153ms     | 0 KB
+HeapSort Min (Binário)    | 9.796661ms      | 0 KB
+HeapSort 3-ário           | 7.767137ms      | 0 KB

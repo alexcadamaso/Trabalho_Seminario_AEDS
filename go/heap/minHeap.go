@@ -24,7 +24,7 @@ func BuildMinHeap(valores []int, tamanho int) {
 	}
 }
 
-func Heapsort(valores []int, tamanho int) {
+func HeapSortMin(valores []int, tamanho int) {
 
 	BuildMinHeap(valores, tamanho)
 
