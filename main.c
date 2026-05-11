@@ -136,7 +136,7 @@ int main() {
     fprintf(fp, "Cenário: Números Aleatórios\n"); 
     
 
-    int* listaA = ler_arquivo("aleatorio.txt", &n);
+    int* listaA = ler_arquivo("../data/aleatorio.txt", &n);
 
     if (listaA == NULL) {
         printf("Falha ao carregar dados.\n");
@@ -151,7 +151,7 @@ int main() {
     printf("\n\nNúmeros invertidos\n");
     fprintf(fp, "\nCenário: Números Invertidos\n");
 
-    int* listaI = ler_arquivo("invertido.txt", &n);
+    int* listaI = ler_arquivo("../data/invertido.txt", &n);
 
     if (listaI == NULL) {
         printf("Falha ao carregar dados.\n");
@@ -166,7 +166,7 @@ int main() {
     fprintf(fp, "\nCenário: Números Ordenados\n");
 
 
-    int* listaO = ler_arquivo("ordenado.txt", &n);
+    int* listaO = ler_arquivo("../data/ordenado.txt", &n);
 
     if (listaO == NULL) {
         printf("Falha ao carregar dados.\n");
