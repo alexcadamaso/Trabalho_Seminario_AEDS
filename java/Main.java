@@ -50,7 +50,7 @@ public class Main {
         try {
             for (int n : tamanhos) {
                 for (String tipoOrdenacao : tipos) {
-                    String caminhoDados = "java/file/" + tipoOrdenacao + ".dat";
+                    String caminhoDados = "../data/" + tipoOrdenacao + ".dat";
                     int[] original = FileManager.lerDadosArquivo(n, caminhoDados);
                     long memoriaFixaVetorKB = (n * 4) / 1024; // cada int ocupa 4 bytes
 

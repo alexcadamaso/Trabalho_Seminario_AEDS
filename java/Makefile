@@ -1,7 +1,7 @@
 JC = javac
 JVM = java
 FLAGS = -d bin
-SRC = $(shell find java -name "*.java")
+SRC = $(shell find . -name "*.java")
 BIN = bin
 MAIN = Main
 
