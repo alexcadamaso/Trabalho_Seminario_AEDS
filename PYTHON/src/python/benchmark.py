@@ -62,7 +62,7 @@ with open("../../results/resultados.csv", "w", newline="") as csvfile:
 
             mem_depois = process.memory_info().rss / 1024
 
-            memoria_usada = abs(mem_depois - mem_antes)
+            memoria_usada = mem_depois
 
             ordenado = esta_ordenado(arr)
 
