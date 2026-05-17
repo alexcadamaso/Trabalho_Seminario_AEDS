@@ -2,6 +2,7 @@ import os
 import time
 import tracemalloc
 import csv
+import psutil
 
 from utils import ler_arquivo, esta_ordenado
 
@@ -49,7 +50,9 @@ with open("../../results/resultados.csv", "w", newline="") as csvfile:
 
             arr = dados.copy()
 
-            tracemalloc.start()
+            process = psutil.Process(os.getpid())
+
+            mem_antes = process.memory_info().rss / 1024
 
             inicio = time.perf_counter()
 
@@ -57,9 +60,9 @@ with open("../../results/resultados.csv", "w", newline="") as csvfile:
 
             fim = time.perf_counter()
 
-            memoria_atual, memoria_pico = tracemalloc.get_traced_memory()
+            mem_depois = process.memory_info().rss / 1024
 
-            tracemalloc.stop()
+            memoria_usada = abs(mem_depois - mem_antes)
 
             ordenado = esta_ordenado(arr)
 
@@ -67,13 +70,13 @@ with open("../../results/resultados.csv", "w", newline="") as csvfile:
                 nome,
                 tipo,
                 fim - inicio,
-                memoria_pico / 1024,
+                memoria_usada,
                 ordenado
             ])
 
             print(
                 f"{nome} | {tipo} | "
                 f"Tempo: {fim - inicio:.6f}s | "
-                f"Memória: {memoria_pico / 1024:.2f} KB | "
+                f"Memória: {memoria_usada:.2f} KB | "
                 f"Ordenado: {ordenado}"
             )
