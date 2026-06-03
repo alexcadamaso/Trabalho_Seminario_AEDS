@@ -52,7 +52,7 @@ public class Main {
                 for (String tipoOrdenacao : tipos) {
                     String caminhoDados = "../data/" + tipoOrdenacao + ".dat";
                     int[] original = FileManager.lerDadosArquivo(n, caminhoDados);
-                    long memoriaFixaVetorKB = (n * 4) / 1024; // cada int ocupa 4 bytes
+                    long memoriaFixaVetorKB = (n * 4); // cada int ocupa 4 bytes
 
                     for (String algoritmo : algoritmos) {
                         boolean eHeapEspecial = algoritmo.contains("DHeap");
@@ -65,7 +65,7 @@ public class Main {
 
                         for (int d : dParaTestar) {
 
-                            long totalTempo = 0;
+                            double totalTempo = 0;
                             long totalTrocas = 0;
                             long totalConsumoMemoria = 0;
 
@@ -86,7 +86,7 @@ public class Main {
                                 long fim = System.nanoTime();
                                 long memoriaDepois = runtime.totalMemory() - runtime.freeMemory();
 
-                                long tempoExecucao = (fim - inicio) / 1000000;
+                                double tempoExecucao = (fim - inicio) / 1000;
                                 long trocasRealizadas = DHeapMax.contadorTrocas; 
                                 long consumoMemoriaRodada = Math.max(0, (memoriaDepois - memoriaAntes) / 1024);
 
@@ -101,7 +101,7 @@ public class Main {
                             }
 
                             // Calculando as médias
-                            long tempoMedio = totalTempo / repeticoes;
+                            double tempoMedio = totalTempo / repeticoes;
                             long trocasMedias = totalTrocas / repeticoes;
                             long memMediaDinamica = totalConsumoMemoria / repeticoes;
 

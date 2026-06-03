@@ -97,7 +97,7 @@ public class FileManager {
     }
 
     // Função para gravar dados no arquivo output.dat
-    public static void gravarResultado(int indice, String algoritmo, int d, int tamanho, String tipoOrdenacao, long tempoExecucao, long memoriaConsumida, long trocas) {
+    public static void gravarResultado(int indice, String algoritmo, int d, int tamanho, String tipoOrdenacao, double tempoExecucao, long memoriaConsumida, long trocas) {
         String caminhoPasta = "resultsJava";
         String caminhoArquivo = caminhoPasta + "/output.dat";
 
@@ -113,7 +113,7 @@ public class FileManager {
                     modoEscrever.println("Indice;Algoritmo;Aridade_D;Tamanho;Tipo;Tempo_ms;Memoria_KB;Trocas");
                 }
 
-                modoEscrever.printf("%d;%s;%d;%d;%s;%d;%d;%d%n", 
+                modoEscrever.printf("%d;%s;%d;%d;%s;%f;%d;%d%n", 
                                     indice, algoritmo, d, tamanho, tipoOrdenacao, tempoExecucao, memoriaConsumida, trocas);
             }
 
@@ -123,7 +123,7 @@ public class FileManager {
     }
 
     // Função para gravar os dados médios no arquivo statistics.dat
-    public static void gravarMedias(String caminhoResumo, String algoritmo, int d,int tamanho, String tipo, long tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
+    public static void gravarMedias(String caminhoResumo, String algoritmo, int d,int tamanho, String tipo, double tempoMedio, long memoriaMedia, long memoriaFixa, long trocasMedias) {
         try {
             Files.createDirectories(Paths.get("resultsJava"));
             File arquivo = new File(caminhoResumo);
@@ -136,7 +136,7 @@ public class FileManager {
                     modoEscrever.println("Algoritmo;Aridade_D;Tamanho;Ordem;TempoMedio_ms;MemoriaMedia_KB;MemoriaFixa_KB;TrocasMedias");
                 }
 
-                modoEscrever.printf("%s;%d;%d;%s;%d;%d;%d;%d%n", 
+                modoEscrever.printf("%s;%d;%d;%s;%f;%d;%d;%d%n", 
                         algoritmo, d, tamanho, tipo, tempoMedio, memoriaMedia, memoriaFixa, trocasMedias);
             }
         } catch (IOException e) {
